@@ -23,7 +23,10 @@ contract SimpleToken{
      *  @param _amount The amount to send.
      */
     function sendToken(address _recipient, uint _amount) {
-        require(balances[msg.sender]!=0); // You must have some tokens.
+        require(
+            balances[msg.sender] >= _amount && 
+            balances[_recipient] <= balances[_recipient] + _amount
+        );
 
         balances[msg.sender]-=_amount;
         balances[_recipient]+=_amount;
