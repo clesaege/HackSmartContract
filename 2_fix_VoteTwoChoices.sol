@@ -27,6 +27,8 @@ contract VoteTwoChoices{
      */
     function vote(uint _nbVotes, bytes32 _proposition) {
         require(_nbVotes + votesCast[msg.sender]<=votingRights[msg.sender]); // Check you have enough voting rights.
+        require(votesCast[msg.sender] <= votesCast[msg.sender] + _nbVotes);
+        require(votesReceived[_proposition] <= votesReceived[_proposition] + _nbVotes);
 
         votesCast[msg.sender]+=_nbVotes;
         votesReceived[_proposition]+=_nbVotes;
