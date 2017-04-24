@@ -3,10 +3,6 @@
 // Contract to store and redeem money.
 contract Store {
     
-    struct Safe {
-        address owner;
-        uint amount;
-    }
     mapping(address => uint) public safes;
 
     /// @dev Store some ETH.
