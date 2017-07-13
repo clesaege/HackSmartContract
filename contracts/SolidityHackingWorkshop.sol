@@ -8,7 +8,7 @@ http://www.wtfpl.net/ for more details. */
 DO NOT USE THEM OR GET INSPIRATION FROM THEM TO MAKE CODE USED IN PRODUCTION */
 
 pragma solidity ^0.4.10;
-
+//*** Exercice 1 ***//
 // Simple token you can buy and send.
 contract SimpleToken{
     mapping(address => uint) public balances;
@@ -31,6 +31,7 @@ contract SimpleToken{
     
 }
 
+//*** Exercice 2 ***//
 // You can buy voting rights by sending ether to the contract.
 // You can vote for the value of your choice.
 contract VoteTwoChoices{
@@ -56,6 +57,7 @@ contract VoteTwoChoices{
 
 }
 
+//*** Exercice 3 ***//
 // You can buy tokens.
 // The owner can set the price.
 contract BuyToken {
@@ -83,6 +85,7 @@ contract BuyToken {
     }
 }
 
+//*** Exercice 4 ***//
 // Contract to store and redeem money.
 contract Store {
     struct Safe {
@@ -110,7 +113,7 @@ contract Store {
     }
 }
 
-
+//*** Exercice 5 ***//
 // Count the total contribution of each user.
 // Assume that the one creating the contract contributed 1ETH.
 contract CountContribution{
@@ -139,7 +142,7 @@ contract CountContribution{
     
 }
 
-
+//*** Exercice 6 ***//
 contract Token {
     mapping(address => uint) public balances;
     
@@ -169,6 +172,7 @@ contract Token {
     
 }
 
+//*** Exercice 7 ***//
 // You can buy some object.
 // Further purchases are discounted.
 // You need to pay basePrice / (1 + objectBought), where objectBought is the number of object you previously bought.
@@ -191,6 +195,7 @@ contract DiscountedBuy {
     
 }
 
+//*** Exercice 8 ***//
 // You choose Head or Tail and send 1 ETH.
 // The next party send 1 ETH and try to guess what you chose.
 // If it succeed it gets 2 ETH, else you get 2 ETH.
@@ -225,6 +230,7 @@ contract HeadOrTail {
     }
 }
 
+//*** Exercice 9 ***//
 // You can store ETH in this contract and redeem them.
 contract Vault {
     mapping(address => uint) public balances;
@@ -239,4 +245,91 @@ contract Vault {
         msg.sender.call.value(balances[msg.sender]);
         balances[msg.sender]=0;
     }
+}
+
+//*** Exercice 10 ***//
+// Hidden head or tail.
+// If the party B guess the choice of party A, it wins 2 ethers, otherwise party A does.
+contract HeadTail {
+    address public partyA;
+    address public partyB;
+    bytes32 public commitmentA;
+    bool public chooseHeadB;
+    uint public timeB;
+    
+    
+    
+    /** @dev Constructor, commit head or tail.
+     *  @param _commitmentA is keccak256(chooseHead,randomNumber);
+     */
+    function HeadTail(bytes32 _commitmentA) payable {
+        require(msg.value == 1 ether);
+        
+        commitmentA=_commitmentA;
+        partyA=msg.sender;
+    }
+    
+    /** @dev Guess the choice of party A.
+     *  @param _chooseHead True if the guess is head, false otherwize.
+     */
+    function guess(bool _chooseHead) payable {
+        require(msg.value == 1 ether);
+        
+        chooseHeadB=_chooseHead;
+        timeB=now;
+    }
+    
+    /** @dev Reveal the commited value and send ETH to the winner.
+     *  @param _chooseHead True if head was chose.
+     *  @param _randomNumber The random number chosen to obfuscate the commitment.
+     */
+    function resolve(bool _chooseHead, uint _randomNumber) {
+        require(msg.sender == partyA);
+        require(keccak256(_chooseHead, _randomNumber) == commitmentA);
+        require(this.balance >= 2 ether);
+        
+        if (_chooseHead == chooseHeadB)
+            partyB.transfer(2 ether);
+        else
+            partyA.transfer(2 ether);
+    }
+    
+    /** @dev Time out party A if it takes more than 1 day to reveal.
+     *  Send ETH to party B.
+     * */
+    function timeOut() {
+        require(now > timeB + 1 days);
+        require(this.balance>=2 ether);
+        partyB.transfer(2 ether);
+    }
+    
+}
+
+//*** Exercice 11 ***//
+// You can store ETH in this contract and redeem them.
+contract VaultInvariant {
+    mapping(address => uint) public balances;
+    uint totalBalance;
+
+    /// @dev Store ETH in the contract.
+    function store() payable {
+        balances[msg.sender]+=msg.value;
+        totalBalance+=msg.value;
+    }
+    
+    /// @dev Redeem your ETH.
+    function redeem() {
+        uint toTranfer = balances[msg.sender];
+        msg.sender.transfer(toTranfer);
+        balances[msg.sender]=0;
+        totalBalance-=toTranfer;
+    }
+    
+    /// @dev Let a user get all funds if an invariant is broken.
+    function invariantBroken() {
+        require(totalBalance!=this.balance);
+        
+        msg.sender.transfer(this.balance);
+    }
+    
 }
