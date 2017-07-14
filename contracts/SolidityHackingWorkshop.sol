@@ -248,8 +248,9 @@ contract Vault {
 }
 
 //*** Exercice 10 ***//
-// Hidden head or tail.
-// If the party B guess the choice of party A, it wins 2 ethers, otherwise party A does.
+// You choose Head or Tail and send 1 ETH.
+// The next party send 1 ETH and try to guess what you chose.
+// If it succeed it gets 2 ETH, else you get 2 ETH.
 contract HeadTail {
     address public partyA;
     address public partyB;
