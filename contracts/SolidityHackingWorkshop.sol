@@ -281,7 +281,7 @@ contract HeadTail {
     }
     
     /** @dev Reveal the commited value and send ETH to the winner.
-     *  @param _chooseHead True if head was chose.
+     *  @param _chooseHead True if head was chosen.
      *  @param _randomNumber The random number chosen to obfuscate the commitment.
      */
     function resolve(bool _chooseHead, uint _randomNumber) {
