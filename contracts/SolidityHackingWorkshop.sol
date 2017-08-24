@@ -67,7 +67,7 @@ contract BuyToken {
     
     /** @dev Buy tokens.
      *  @param _amount The amount to buy.
-     *  @param _price  The maximum price to buy those in ETH.
+     *  @param _price  The price to buy those in ETH.
      */
     function buyToken(uint _amount, uint _price) payable {
         require(_price>=price); // The price is at least the current price.
