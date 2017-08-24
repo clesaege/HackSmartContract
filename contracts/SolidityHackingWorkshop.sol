@@ -214,6 +214,7 @@ contract HeadOrTail {
         
         chosen=true;
         lastChoiceHead=_chooseHead;
+        lastParty=msg.sender;
     }
     
     
