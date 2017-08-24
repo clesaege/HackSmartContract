@@ -280,6 +280,7 @@ contract HeadTail {
         
         chooseHeadB=_chooseHead;
         timeB=now;
+        partyB=msg.sender;
     }
     
     /** @dev Reveal the commited value and send ETH to the winner.
