@@ -243,7 +243,8 @@ contract Vault {
     
     /// @dev Redeem your ETH.
     function redeem() {
-        msg.sender.call.value(balances[msg.sender])();
+        if(!msg.sender.call.value(balances[msg.sender])())
+            throw;
         balances[msg.sender]=0;
     }
 }
