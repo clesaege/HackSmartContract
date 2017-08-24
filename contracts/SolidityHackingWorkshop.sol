@@ -180,7 +180,7 @@ contract DiscountedBuy {
     uint public basePrice = 1 ether;
     mapping (address => uint) public objectBought;
 
-    /// @dev Buy and object.
+    /// @dev Buy an object.
     function buy() payable {
         require(msg.value * (1 + objectBought[msg.sender]) == basePrice);
         objectBought[msg.sender]+=1;
