@@ -279,6 +279,7 @@ contract HeadTail {
      */
     function guess(bool _chooseHead) payable {
         require(msg.value == 1 ether);
+        require(partyB==address(0));
         
         chooseHeadB=_chooseHead;
         timeB=now;
