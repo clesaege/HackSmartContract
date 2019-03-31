@@ -309,9 +309,40 @@ contract HeadTail {
         require(this.balance>=2 ether);
         partyB.transfer(2 ether);
     }
-    
 }
 
+//*** Exercice 11 ***//
+// You can create coffers put money into it and withdraw it.
+contract Coffers {
+    struct Coffer {uint[] slots;}
+    mapping (address => Coffer) coffers;
+    
+    /** @dev Create coffers.
+     *  @param _extraSlots The amount of slots to add to one's coffer.
+     * */
+    function createCoffers(uint _extraSlots) {
+        Coffer coffer = coffers[msg.sender];
+        require(coffer.slots.length+_extraSlots >= _extraSlots);
+        coffer.slots.length += _extraSlots;
+    }
+    
+    /** @dev Deposit money in one's coffer slot.
+     *  @param _slot The slot to deposit money.
+     * */
+    function deposit(uint _slot) payable {
+        Coffer coffer = coffers[msg.sender];
+        coffer.slots[_slot] += msg.value;
+    }
+    
+    /** @dev withdraw all of the money of  one's coffer slot.
+     *  @param _slot The slot to withdraw money from.
+     * */
+    function withdraw(uint _slot) {
+        Coffer coffer = coffers[msg.sender];
+        msg.sender.transfer(coffer.slots[_slot]);
+        coffer.slots[_slot] = 0;
+    }
+}
 //*** Exercice Bonus ***//
 // One of the previous contracts has 2 vulnerabilities.
 // Find which one and describe the second vulnerability.
