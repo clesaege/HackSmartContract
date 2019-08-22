@@ -343,7 +343,7 @@ contract Coffers {
         coffer.slots[_slot] = 0;
     }
 }
-//*** Exercice Bonus ***//
+//*** Exercise Bonus ***//
 // One of the previous contracts has 2 vulnerabilities.
 // Find which one and describe the second vulnerability.
 
