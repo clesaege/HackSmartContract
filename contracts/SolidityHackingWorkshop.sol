@@ -11,7 +11,7 @@ Being able to destroy your own stuff is not a vulnerability and should be dealt 
 */
 
 pragma solidity ^0.4.10;
-//*** Exercice 1 ***//
+//*** Exercise 1 ***//
 // Simple token you can buy and send.
 contract SimpleToken{
     mapping(address => uint) public balances;
@@ -34,7 +34,7 @@ contract SimpleToken{
     
 }
 
-//*** Exercice 2 ***//
+//*** Exercise 2 ***//
 // You can buy voting rights by sending ether to the contract.
 // You can vote for the value of your choice.
 contract VoteTwoChoices{
@@ -60,7 +60,7 @@ contract VoteTwoChoices{
 
 }
 
-//*** Exercice 3 ***//
+//*** Exercise 3 ***//
 // You can buy tokens.
 // The owner can set the price.
 contract BuyToken {
@@ -88,7 +88,7 @@ contract BuyToken {
     }
 }
 
-//*** Exercice 4 ***//
+//*** Exercise 4 ***//
 // Contract to store and redeem money.
 contract Store {
     struct Safe {
@@ -116,7 +116,7 @@ contract Store {
     }
 }
 
-//*** Exercice 5 ***//
+//*** Exercise 5 ***//
 // Count the total contribution of each user.
 // Assume that the one creating the contract contributed 1ETH.
 contract CountContribution{
@@ -145,7 +145,7 @@ contract CountContribution{
     
 }
 
-//*** Exercice 6 ***//
+//*** Exercise 6 ***//
 contract Token {
     mapping(address => uint) public balances;
     
@@ -175,7 +175,7 @@ contract Token {
     
 }
 
-//*** Exercice 7 ***//
+//*** Exercise 7 ***//
 // You can buy some object.
 // Further purchases are discounted.
 // You need to pay basePrice / (1 + objectBought), where objectBought is the number of object you previously bought.
@@ -198,7 +198,7 @@ contract DiscountedBuy {
     
 }
 
-//*** Exercice 8 ***//
+//*** Exercise 8 ***//
 // You choose Head or Tail and send 1 ETH.
 // The next party send 1 ETH and try to guess what you chose.
 // If it succeed it gets 2 ETH, else you get 2 ETH.
@@ -234,7 +234,7 @@ contract HeadOrTail {
     }
 }
 
-//*** Exercice 9 ***//
+//*** Exercise 9 ***//
 // You can store ETH in this contract and redeem them.
 contract Vault {
     mapping(address => uint) public balances;
@@ -251,7 +251,7 @@ contract Vault {
     }
 }
 
-//*** Exercice 10 ***//
+//*** Exercise 10 ***//
 // You choose Head or Tail and send 1 ETH.
 // The next party send 1 ETH and try to guess what you chose.
 // If it succeed it gets 2 ETH, else you get 2 ETH.
@@ -311,7 +311,7 @@ contract HeadTail {
     }
 }
 
-//*** Exercice 11 ***//
+//*** Exercise 11 ***//
 // You can create coffers put money into it and withdraw it.
 contract Coffers {
     struct Coffer {uint[] slots;}
