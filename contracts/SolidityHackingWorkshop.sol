@@ -314,35 +314,38 @@ contract HeadTail {
 //*** Exercice 11 ***//
 // You can create coffers put money into it and withdraw it.
 contract Coffers {
-    struct Coffer {uint[] slots;}
-    mapping (address => Coffer) coffers;
+    struct Coffer {address owner; uint[] slots;}
+    Coffer[] public coffers;
     
     /** @dev Create coffers.
-     *  @param _extraSlots The amount of slots to add to one's coffer.
+     *  @param _slots The amount of slots the coffer will have.
      * */
-    function createCoffers(uint _extraSlots) {
-        Coffer coffer = coffers[msg.sender];
-        require(coffer.slots.length+_extraSlots >= _extraSlots);
-        coffer.slots.length += _extraSlots;
+    function createCoffer(uint _slots) external {
+        Coffer storage coffer = coffers[coffers.length++];
+        coffer.owner = msg.sender;
+        coffer.slots.length = _slots;
     }
     
     /** @dev Deposit money in one's coffer slot.
+     *  @dev _coffer The coffer to deposit money on.
      *  @param _slot The slot to deposit money.
      * */
-    function deposit(uint _slot) payable {
-        Coffer coffer = coffers[msg.sender];
+    function deposit(uint _coffer, uint _slot) payable external {
+        Coffer storage coffer = coffers[_coffer];
         coffer.slots[_slot] += msg.value;
     }
     
-    /** @dev withdraw all of the money of  one's coffer slot.
+    /** @dev withdraw all of the money of one's coffer slot.
      *  @param _slot The slot to withdraw money from.
      * */
-    function withdraw(uint _slot) {
-        Coffer coffer = coffers[msg.sender];
+    function withdraw(uint _coffer, uint _slot) external {
+        Coffer storage coffer = coffers[_coffer];
+        require(coffer.owner == msg.sender);
         msg.sender.transfer(coffer.slots[_slot]);
         coffer.slots[_slot] = 0;
     }
 }
+
 //*** Exercise Bonus ***//
 // One of the previous contracts has 2 vulnerabilities.
 // Find which one and describe the second vulnerability.
