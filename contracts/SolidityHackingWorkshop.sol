@@ -4,7 +4,7 @@ and/or modify it under the terms of the Do What The Fuck You Want
 To Public License, Version 2, as published by Sam Hocevar. See
 http://www.wtfpl.net/ for more details. */
 
-/* These contracts are examples of contracts with vulnerabilities in order to practice your hacking skills.
+/* These contracts are examples of contracts with bugs and vulnerabilities in order to practice your hacking skills.
 DO NOT USE THEM OR GET INSPIRATION FROM THEM TO MAKE CODE USED IN PRODUCTION 
 You are required to find vulnerabilities where an attacker harms someone else.
 Being able to destroy your own stuff is not a vulnerability and should be dealt at the interface level.
