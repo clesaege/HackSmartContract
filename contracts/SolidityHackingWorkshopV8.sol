@@ -119,7 +119,29 @@ contract Vault {
     }
 }
 
-//*** Exercice 5 ***//
+//*** Exercice 6 ***//
+// This is a piggy bank.
+// The owner can deposit 1 ETH whenever he wants.
+// He can only withdraw when the deposited amount reaches 10 ETH.
+contract PiggyBank {
+    
+    address owner;
+    
+    constructor() {
+        owner = msg.sender;
+    }
+    
+    function deposit() public payable {
+        require(msg.sender == owner && msg.value == 1 ether && address(this).balance <= 10 ether);
+    }
+    
+    function withdrawAll() public {
+        require(msg.sender == owner && address(this).balance == 10 ether);
+        payable(owner).send(address(this).balance);
+    }
+}
+
+//*** Exercice 6 ***//
 // You choose Head or Tail and send 1 ETH.
 // The next party send 1 ETH and try to guess what you chose.
 // If it succeed it gets 2 ETH, else you get 2 ETH.
