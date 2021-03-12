@@ -194,6 +194,7 @@ contract GuessTheAverage {
     uint256 public lastDifference; // Last best difference between a guess and the average.
     uint256 public average; // Average to guess.
     uint256 public totalBalance; // Total balance of the contract.
+    uint256 public numberOfLosers; // Number of losers in the winners list.
     Stage public currenStage; // Current Stage.
 
     enum Stage {
@@ -283,11 +284,8 @@ contract GuessTheAverage {
             else difference = average - guesses[i];
             // Compare difference with the latest lowest difference.
             if (difference < lastDifference) {
-                // Remove all losers.
-                for (uint256 j = 0; j < winners.length; j++) {
-                    winners.pop();
-                }
                 // Add winner and update lastDifference.
+                cursorDistribute = numberOfLosers = winners.length;
                 winners.push(indexToPlayer[i]);
                 lastDifference = difference;
             } else if (difference == lastDifference) winners.push(indexToPlayer[i]);
@@ -305,7 +303,7 @@ contract GuessTheAverage {
         require(currenStage == Stage.WinnersFound, "Winners must have been found");
         for (uint256 i = cursorDistribute; i < winners.length && (_count == 0 || i < cursorDistribute + _count); i++) {
             // Send ether to the winners, use send not to block.
-            payable(winners[i]).send(totalBalance / winners.length);
+            payable(winners[i]).send(totalBalance / (winners.length - numberOfLosers));
             if (i == winners.length -1) currenStage = Stage.Distributed;
         }
         // Update the cursor in case we haven't finished going through the list.
