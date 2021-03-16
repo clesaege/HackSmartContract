@@ -233,7 +233,7 @@ contract LinearBondedCurve {
     
 }
 
-//*** Exercice 7 ***//
+//*** Exercice 8 ***//
 // You can create coffers, deposit money and withdraw from them.
 contract Coffers {
     struct Coffer {uint nbSlots; mapping(uint => uint) slots;}
@@ -280,7 +280,7 @@ contract Coffers {
     }
 }
 
-//*** Exercice 8 ***//
+//*** Exercice 9 ***//
 // Simple coffer you deposit to and withdraw from.
 contract CommonCoffers {
     mapping(address => uint) public coffers;
@@ -314,7 +314,7 @@ contract CommonCoffers {
 }
 
 
-//*** Exercice 9 ***//
+//*** Exercice 10 ***//
 // Two parties make a deposit for a particular side and the owner decides which side is correct.
 // Owner's decision is based on some external factors irrelevant to this contract.
 contract Resolver {
@@ -387,7 +387,7 @@ contract Resolver {
 }
 
 
-//*** Exercice 10 ***//
+//*** Exercice 11 ***//
 // Contract for users to register. It will be used by other contracts to attach rights to those users (rights will be linked to user IDs).
 contract Registry {
 
@@ -435,7 +435,7 @@ contract Registry {
 
 }
 
-//*** Exercice 11 ***//
+//*** Exercice 12 ***//
 // A Token contract that keeps a record of the users past balances.
 contract SnapShotToken {
     mapping(address => uint) public balances;
