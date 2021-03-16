@@ -629,7 +629,7 @@ contract PiggyBank {
 
     /// @dev Deposit 1 ETH in the smart contract
     function deposit() public payable {
-        require(msg.sender == owner && msg.value == 1 ether && address(this).balance < 10 ether);
+        require(msg.sender == owner && msg.value == 1 ether && address(this).balance <= 10 ether);
     }
 
     /// @dev Withdraw the entire smart contract balance
