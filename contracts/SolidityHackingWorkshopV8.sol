@@ -208,7 +208,7 @@ contract LinearBondedCurve {
     
     /// @dev Buy token. The price is linear to the total supply.
     function buy() public payable {
-        uint tokenToReceive = 1e18 * (msg.value / (1e18 + totalSupply));
+        uint tokenToReceive =  (1e18 * msg.value) / (1e18 + totalSupply);
         balances[msg.sender] += tokenToReceive;
         totalSupply += tokenToReceive;
     }
