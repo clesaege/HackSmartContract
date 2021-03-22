@@ -331,7 +331,7 @@ contract Resolver {
     uint256[2] public partyDeposits;
 
     /** @dev Constructor.
-     *  @param _baseDeposit The deposit a party has to pay.
+     *  @param _baseDeposit The deposit a party has to pay. Note that it is greater than the reward.
      */
     constructor(uint256 _baseDeposit) payable {
         reward = msg.value;
@@ -389,6 +389,7 @@ contract Resolver {
 
 //*** Exercice 11 ***//
 // Contract for users to register. It will be used by other contracts to attach rights to those users (rights will be linked to user IDs).
+// Note that simply being registered does not confer any right.
 contract Registry {
 
     struct User {
