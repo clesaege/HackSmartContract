@@ -423,17 +423,6 @@ contract Registry {
         user.nonce = _nonce;
     }
 
-    /** @dev Remove yourself from the registry for whatever reason.
-     *  @param _ID The ID of the user.
-     */
-    function unregister(bytes32 _ID) public {
-        User storage user = users[_ID];
-        require(user.registered, "Should be registered");
-        require(msg.sender == user.regAddress, "Only the user who registered this profile is allowed to unregister it");
-        user.registered = false;
-        isRegistered[user.name][user.surname][user.nonce] = false;
-    }
-
 }
 
 //*** Exercice 12 ***//
