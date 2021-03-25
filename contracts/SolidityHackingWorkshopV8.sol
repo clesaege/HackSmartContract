@@ -489,7 +489,7 @@ contract GuessTheAverage {
     uint256 public average; // Average to guess.
     uint256 public totalBalance; // Total balance of the contract.
     uint256 public numberOfLosers; // Number of losers in the winners list.
-    Stage public currenStage; // Current Stage.
+    Stage public currentStage; // Current Stage.
 
     enum Stage {
         CommitAndRevealPeriod,
@@ -556,11 +556,11 @@ contract GuessTheAverage {
      */
     function findWinners(uint256 _count) public {
         require(block.timestamp >= start + commitDuration + revealDuration, "Reveal period must have ended");
-        require(currenStage < Stage.WinnersFound);
+        require(currentStage < Stage.WinnersFound);
         // If we don't have calculated the average yet, we calculate it.
-        if (currenStage < Stage.AverageCalculated) {
+        if (currentStage < Stage.AverageCalculated) {
             average /= guesses.length;
-            currenStage = Stage.AverageCalculated;
+            currentStage = Stage.AverageCalculated;
             totalBalance = address(this).balance;
             cursorWinner += 1;
         }
@@ -571,7 +571,8 @@ contract GuessTheAverage {
             if (guesses[0] > average) lastDifference = guesses[0] - average;
             else lastDifference = average - guesses[0];
         }
-        for (uint256 i = cursorWinner; i < guesses.length && (_count == 0 || i < cursorWinner + _count); i++) {
+        uint256 i = cursorWinner;
+        for (; i < guesses.length && (_count == 0 || i < cursorWinner + _count); i++) {
             uint256 difference;
             // Avoid overflow.
             if (guesses[i] > average) difference = guesses[i] - average;
@@ -583,9 +584,10 @@ contract GuessTheAverage {
                 winners.push(indexToPlayer[i]);
                 lastDifference = difference;
             } else if (difference == lastDifference) winners.push(indexToPlayer[i]);
-            // If we have passed through the entire array, update currenStage.
-            if (i == guesses.length - 1) currenStage = Stage.WinnersFound;
+            // If we have passed through the entire array, update currentStage.
+            
         }
+        if (i == guesses.length - 1) currentStage = Stage.WinnersFound;
         // Update the cursor in case we haven't finished going through the list.
         cursorWinner += _count;
     }
@@ -594,11 +596,11 @@ contract GuessTheAverage {
      *  @param _count The number of transactions to execute. Executes until the end if set to "0" or number higher than number of winners in the list.
      */
     function distribute(uint256 _count) public {
-        require(currenStage == Stage.WinnersFound, "Winners must have been found");
+        require(currentStage == Stage.WinnersFound, "Winners must have been found");
         for (uint256 i = cursorDistribute; i < winners.length && (_count == 0 || i < cursorDistribute + _count); i++) {
             // Send ether to the winners, use send not to block.
             payable(winners[i]).send(totalBalance / (winners.length - numberOfLosers));
-            if (i == winners.length -1) currenStage = Stage.Distributed;
+            if (i == winners.length -1) currentStage = Stage.Distributed;
         }
         // Update the cursor in case we haven't finished going through the list.
         cursorDistribute += _count;
