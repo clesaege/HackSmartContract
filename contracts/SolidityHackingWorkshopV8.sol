@@ -184,7 +184,7 @@ contract HeadTail {
 contract SimpleToken {
     mapping(address => int) public balances;
     
-    /// @dev Buy token at the price of 1ETH/token.
+    /// @dev Creator starts with all the tokens.
     constructor()  {
         balances[msg.sender]+= 1000e18;
     }
