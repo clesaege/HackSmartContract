@@ -478,7 +478,8 @@ contract SnapShotToken {
 // Each player tries to guess the average of all the player's revealed answers combined.
 // They must pay 1 ETH to play.
 // The winners are those who are the nearest from the average.
-// Note that some players may not reveal and use multiple accounts, this is part of the game and can be used tactically .
+// Note that some players may not reveal and use multiple accounts, this is part of the game and can be used tactically.
+// Also note that waiting the last minute to reveal is also part of the game and can be used tactically (but it would probably cost a lot of gas).
 contract GuessTheAverage {
 
     uint256 immutable public start; // Beginning of the game.
