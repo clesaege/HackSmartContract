@@ -201,7 +201,7 @@ contract SimpleToken {
 }
 
 //*** Exercice 7 ***//
-// Simple token you can buy and send through a bonded curve.
+// Simple token you can buy and send through a bonded curve. We assume that order frontrunning is fine.
 contract LinearBondedCurve {
     mapping(address => uint) public balances;
     uint public totalSupply;
