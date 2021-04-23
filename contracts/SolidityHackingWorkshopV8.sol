@@ -350,6 +350,7 @@ contract Resolver {
     }
 
     /** @dev Declare the winner as an owner.
+     *  Note that in case no one funded for the winner when the owner makes its transaction, having someone else deposit to get the reward is fine and doesn't affect the mecanism.
      *  @param _winner The party that is eligible to a reward according to owner.
      */
     function declareWinner(Side _winner) public {
