@@ -589,7 +589,7 @@ contract GuessTheAverage {
             // If we have passed through the entire array, update currentStage.
             
         }
-        if (i == guesses.length - 1) currentStage = Stage.WinnersFound;
+        if (i == guesses.length) currentStage = Stage.WinnersFound;
         // Update the cursor in case we haven't finished going through the list.
         cursorWinner += _count;
     }
