@@ -538,7 +538,7 @@ contract GuessTheAverage {
      *  @param _blindingFactor What has been used for the commitment to blind the guess.
      */
     function reveal(uint _number, bytes32 _blindingFactor) public {
-        require(block.timestamp >= start + commitDuration && block.timestamp <= start + commitDuration + revealDuration, "Reveal period must have begun and not ended");
+        require(block.timestamp >= start + commitDuration && block.timestamp < start + commitDuration + revealDuration, "Reveal period must have begun and not ended");
         Player storage player = players[msg.sender];
         require(!player.hasReveal, "Player has already revealed");
         require(player.hasGuessed, "Player must have guessed");
