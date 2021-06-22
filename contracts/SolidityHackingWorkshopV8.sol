@@ -665,12 +665,11 @@ contract WinnerTakesAll {
     }
 
     function setRewardsAtRound(uint _roundIndex) external payable onlyOwner() {
-        require(_roundIndex < rounds.length && rounds[_roundIndex].rewards == 0);
+        require(rounds[_roundIndex].rewards == 0);
         rounds[_roundIndex].rewards = msg.value;
     }
 
     function setRewardsAtRoundfor(uint _roundIndex, address[] calldata _recipients) external onlyOwner() {
-        require(_roundIndex < rounds.length);
         for (uint i; i < _recipients.length; i++) {
             rounds[_roundIndex].isAllowed[_recipients[i]] = true;
         }
@@ -681,7 +680,6 @@ contract WinnerTakesAll {
     }
 
     function withdrawRewards(uint _roundIndex) external {
-        require(_roundIndex < rounds.length);
         require(rounds[_roundIndex].isAllowed[msg.sender]);
         uint amount = rounds[_roundIndex].rewards;
         rounds[_roundIndex].rewards = 0;
