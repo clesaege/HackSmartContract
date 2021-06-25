@@ -695,8 +695,103 @@ contract WinnerTakesAll {
     }
 }
 
+/*** Exercice 16 ***//
+// An arbitrable contract has some reports on which everyone can request arbitration.
+// The arbitration is given by the arbitrator contract.
+// This is a very simplified version of Kleros court and several functions are simplified or omitted for simplicity.
+// Note that Owners and Arbitrator are TRUSTED.
+interface IArbitrator {
+    function setArbitrable(address _arbitrable) external;
+    function createDispute(uint _reportID) external payable returns(uint);
+    function arbitrationCost() external pure returns(uint);
+}
+
+contract Arbitrator is IArbitrator {
+    
+    address owner;
+    address arbitrable;
+    mapping(uint => bool) isChallenged;
+    uint[] disputes;
+    
+    constructor() {
+        owner = msg.sender;
+    }
+    
+    function setArbitrable(address _arbitrable) external override {
+        require(msg.sender == owner, "Only owner.");
+        arbitrable = _arbitrable;
+    }
+    
+    function createDispute(uint _reportID) external payable override returns(uint) {
+        require(msg.sender == arbitrable, "Only arbitrable");
+        require(msg.value >= 1 ether, "Must pay the full arbitration cost.");
+        require(!isChallenged[_reportID], "Report must not have been challenged.");
+        disputes.push(_reportID);
+        isChallenged[_reportID] = true;
+        return disputes.length;
+    }
+    
+    function arbitrationCost() external pure override returns(uint) {
+        return 1 ether;
+    }
+    
+    // Other functions useless for the exercise...
+}
+
+contract Arbitrable {
+    
+    struct Report {
+        bool isRuled;
+        uint ruling;
+    }
+    
+    Arbitrator arbitrator;
+    address owner;
+    mapping(uint => uint) externalIDtoLocalID;
+    mapping(uint => bool) isRuled;
+    Report[] reports;
+    
+    constructor(Arbitrator _arbitrator) {
+        owner = msg.sender;
+        arbitrator = _arbitrator;
+    }
+    
+    function requestArbitration(uint _reportID)
+        external
+        payable
+        returns (uint256 disputeID)
+    {
+        uint256 arbitrationCost = arbitrator.arbitrationCost();
+        disputeID = arbitrator.createDispute{value: arbitrationCost}(_reportID);
+        externalIDtoLocalID[disputeID] = _reportID;
+
+        if (msg.value > arbitrationCost) {
+            uint excessAmount = msg.value - arbitrationCost;
+            // It's the sender responsibility to accept ether
+            payable(msg.sender).send(excessAmount);
+        }
+    }
+
+    function rule(uint _disputeID, uint _ruling) external {
+        require(Arbitrator(msg.sender) == arbitrator, "Only arbitrator.");
+        uint reportID = externalIDtoLocalID[_disputeID];
+        Report storage report = reports[reportID];
+        require(!report.isRuled, "Report has already been ruled.");
+        report.isRuled = true;
+        report.ruling = _ruling;
+    }
+
+    function addReport() external {
+        require(msg.sender == owner, "Only owner;");
+        reports.push();
+    }
+
+    receive() external payable {}
+
+    // Other functions useless for the exercise...
+}
+
 
 //*** Exercise Bonus ***//
 // One of the previous contracts has 2 vulnerabilities.
 // Find which one and describe the second vulnerability.
-
