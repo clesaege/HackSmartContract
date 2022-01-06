@@ -344,7 +344,7 @@ contract Resolver {
     function deposit(Side _side) public payable {
         require(!declared, "The winner is already declared");
         require(sides[uint(_side)] == address(0), "Side already paid");
-        require(msg.value > baseDeposit, "Should cover the base deposit");
+        require(msg.value >= baseDeposit, "Should cover the base deposit");
         sides[uint(_side)] = payable(msg.sender);
         partyDeposits[uint(_side)] = msg.value;
         reward += baseDeposit;
