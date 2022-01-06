@@ -331,7 +331,7 @@ contract Resolver {
     uint256[2] public partyDeposits;
 
     /** @dev Constructor.
-     *  @param _baseDeposit The deposit a party has to pay. Note that it is greater than the reward.
+     *  @param _baseDeposit The deposit a party has to pay.
      */
     constructor(uint256 _baseDeposit) payable {
         reward = msg.value;
@@ -347,6 +347,7 @@ contract Resolver {
         require(msg.value > baseDeposit, "Should cover the base deposit");
         sides[uint(_side)] = payable(msg.sender);
         partyDeposits[uint(_side)] = msg.value;
+        reward += baseDeposit;
     }
 
     /** @dev Declare the winner as an owner.
