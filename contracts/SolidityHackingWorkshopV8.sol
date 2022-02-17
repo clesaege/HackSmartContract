@@ -320,7 +320,7 @@ contract CommonCoffers {
 contract Resolver {
     enum Side {A, B}
 
-    address public owner = msg.sender;
+    address payable public owner = msg.sender;
     address payable[2] public sides;
 
     uint256 public baseDeposit;
@@ -347,7 +347,7 @@ contract Resolver {
         require(msg.value >= baseDeposit, "Should cover the base deposit");
         sides[uint(_side)] = payable(msg.sender);
         partyDeposits[uint(_side)] = msg.value;
-        reward += baseDeposit;
+        owner.send(baseDeposit);
     }
 
     /** @dev Declare the winner as an owner.
