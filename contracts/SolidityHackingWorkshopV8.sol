@@ -290,6 +290,7 @@ contract CommonCoffers {
      *  @param _owner The coffer to deposit money on.
      * */
     function deposit(address _owner) payable external {
+        require(msg.value > 0);
         if (scalingFactor != 0) {
             uint toAdd = (scalingFactor * msg.value) / (address(this).balance - msg.value);
             coffers[_owner] += toAdd;
