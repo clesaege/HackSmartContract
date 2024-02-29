@@ -321,7 +321,7 @@ contract CommonCoffers {
 contract Resolver {
     enum Side {A, B}
 
-    address payable public owner = msg.sender;
+    address payable public owner = payable(msg.sender);
     address payable[2] public sides;
 
     uint256 public baseDeposit;
@@ -701,4 +701,3 @@ contract WinnerTakesAll {
 //*** Exercise Bonus ***//
 // One of the previous contracts has 2 vulnerabilities.
 // Find which one and describe the second vulnerability.
-
