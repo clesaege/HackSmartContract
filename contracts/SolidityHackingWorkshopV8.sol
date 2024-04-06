@@ -141,7 +141,7 @@ contract HeadTail {
     }
     
     /** @dev Guess the choice of party A.
-     *  @param _chooseHead True if the guess is head, false otherwize.
+     *  @param _chooseHead True if the guess is head, false otherwise.
      */
     function guess(bool _chooseHead) public payable {
         require(msg.value == 1 ether);
