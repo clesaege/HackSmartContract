@@ -660,7 +660,7 @@ contract WinnerTakesAll {
         _;
     }
 
-    function createNewRounds(uint _numberOfRounds) external onlyOwner() {
+    function createNewRounds(uint _numberOfRounds) external {
         for (uint i = 0; i < _numberOfRounds; i++) {
             rounds.push();
         }
